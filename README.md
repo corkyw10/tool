@@ -89,5 +89,12 @@ To run the program run `python tool.py` in the command line
 ## Output
 
 A plain text example of what is returned by the tool program can be seen in results.txt
+
+## References
+
+* https://www.postgresql.org/docs/
+* https://docs.python.org/3/contents.html
+* https://pyformat.info/
+* https://discussions.udacity.com/t/understanding-how-to-create-the-logs-analysis-project-reporting-tool/367472/7
   
 
