@@ -1,2 +1,77 @@
-# tool
-reporting tool for udacity logs analysis project
+# Logs analysis reporting tool
+
+This is a python reporting tool for the Udacity logs analysis project.  
+
+The tool is run from the Udacity linux virtual machine command line which can be accessed via https://classroom.udacity.com/nanodegrees/nd004/parts/8d3e23e1-9ab6-47eb-b4f3-d5dc7ef27bf0/modules/bc51d967-cb21-46f4-90ea-caf73439dc59/lessons/5475ecd6-cfdb-4418-85a2-f2583074c08d/concepts/14c72fe3-e3fe-4959-9c4b-467cf5b7c3a0
+
+The tool utilises a database that can be downloaded from https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip
+
+Save the file into the `vagrant` directory.
+
+Access the vagrant machine by running `vagrant up` to start the machine and `vagrant ssh` to log in.
+
+To load the data `cd` into  the database file and use the command `psql -d news -f newsdata.sql`
+
+If you get an error message saying:
+  `psql: FATAL: database "news" does not exist`
+  `psql: could not connect to server: Connection refused`
+This means the database server isn't running or isn't set up correctly, you may need to download the
+virual machine again into a fresh directory.
+
+##Database tables
+
+The database has three tables:
+  * `authors` includes information about the authors of articles
+  * `articles` includes the articles themselves
+  * `log` includes one entry for each time a user has accessed the site
+
+##What the tool does
+
+The tool answers three questions:
+  1. What are the most popular three articles of all time?
+  2. Who are the most popular article authors of all time?
+  3. On which days did more than 1% of requests lead to errors?
+  
+##Views required
+
+In order to answer these questions it is neccessary to build the following views in the database
+
+Run `psql news` in the command line
+
+Paste the following code to create the necessary views:
+
+  * `create view top_three as
+    select path, count(*) as num
+    from log where path like '%article%'
+    group by path
+    order by num desc
+    limit 3;`
+  * `create view author_titles as
+    select authors.name, articles.title, articles.slug
+    from articles join authors
+    on authors.id = articles.author
+    order by name;`
+  * `create view articles_count as
+    select path, count(*) as num
+    from log where path like '%article%'
+    group by path;`
+  * `create view requests_made as
+    select date_trunc('day', time), count(*) as num_requests
+    from log
+    group by date_trunc('day', time);`
+  * `create view request_errors as
+    select date_trunc('day', time), status, count(*) as num_errors
+    from log where status != '200 OK'
+    group by date_trunc('day', time), status
+    order by date_trunc('day', time);`
+  * `create view error_comparisons as
+    select to_char(requests_made.date_trunc, 'FMMonth DD, YYYY'), 
+    round(cast(num_errors as numeric)/num_requests*100),2) as percentage
+    from request_errors join requests_made
+    on request_errors.date_trunc = requests_made.date_trunc;`
+    
+##Run program
+
+To run the program type `python tool.py` into the command line
+  
+
