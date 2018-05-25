@@ -85,5 +85,9 @@ Paste the following code to create the necessary views:
 ## Run program
 
 To run the program run `python tool.py` in the command line
+
+## Output
+
+A plain text example of what is returned by the tool program can be seen in results.txt
   
 
