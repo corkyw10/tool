@@ -2,35 +2,38 @@
 
 This is a python reporting tool for the Udacity logs analysis project.  
 
-The tool is run from the Udacity linux virtual machine command line which can be accessed [here](https://classroom.udacity.com/nanodegrees/nd004/parts/8d3e23e1-9ab6-47eb-b4f3-d5dc7ef27bf0/modules/bc51d967-cb21-46f4-90ea-caf73439dc59/lessons/5475ecd6-cfdb-4418-85a2-f2583074c08d/concepts/14c72fe3-e3fe-4959-9c4b-467cf5b7c3a0)
+The purpose of the project is to use `psycopg2` to query a mock PostgreSQL database for a fictional news website. 
 
-The tool utilises a database that can be downloaded [here](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip)
+### What the tool does
 
-Save the file into the `vagrant` directory.
+The tool answers three questions:
+  1. What are the most popular three articles of all time?
+  2. Who are the most popular article authors of all time?
+  3. On which days did more than 1% of requests lead to errors?
+  
+### Database tables
 
-Access the vagrant machine by running `vagrant up` to start the machine and `vagrant ssh` to log in.
+The database has three tables:
+  * `authors` includes information about the authors of articles
+  * `articles` includes the articles themselves
+  * `log` includes one entry for each time a user has accessed the site
+  
+## Running the program
 
-To load the data `cd` into  the database file and use the command `psql -d news -f newsdata.sql`
+The program is designed to be run via the Udacity linux virtual machine command line.
+
+You can install VirtualBox via this [link](https://www.virtualbox.org/wiki/Downloads) and vagrant, the command line utility to manage the virtual machine [here](https://www.vagrantup.com/downloads.html). 
+  
+ * Create a folder to store the files for this project and then open the folder with the terminal.
+ * Type `vagrant init ubuntu/trusty64` to tell Vagrant what kind of Linux VM you want to run
+ * Run the virtual machine by running `vagrant up`and `vagrant ssh` to log in.
+ * To load the data `cd` into  the newsdata file and use the command `psql -d news -f newsdata.sql`
 
 If you get an error message saying:
   ```psql: FATAL: database "news" does not exist```
   ```psql: could not connect to server: Connection refused```
 This means the database server isn't running or isn't set up correctly, you may need to download the
 virual machine again into a fresh directory.
-
-## Database tables
-
-The database has three tables:
-  * `authors` includes information about the authors of articles
-  * `articles` includes the articles themselves
-  * `log` includes one entry for each time a user has accessed the site
-
-## What the tool does
-
-The tool answers three questions:
-  1. What are the most popular three articles of all time?
-  2. Who are the most popular article authors of all time?
-  3. On which days did more than 1% of requests lead to errors?
   
 ## Views required
 
