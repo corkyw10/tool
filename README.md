@@ -25,65 +25,22 @@ The program is designed to be run via the Udacity linux virtual machine command 
 You can install VirtualBox via this [link](https://www.virtualbox.org/wiki/Downloads) and vagrant, the command line utility to manage the virtual machine [here](https://www.vagrantup.com/downloads.html). 
   
  * Create a folder to store the files for this project and then open the folder with the terminal.
+ * newsdata.zip contains the newsdata.sql database structure, save this, create_views.sql and tool.py in your project folder.
+ * Save Vagrantfile in your vagrant folder.
  * Type `vagrant init ubuntu/trusty64` to tell Vagrant what kind of Linux VM you want to run
  * Run the virtual machine by running `vagrant up`and `vagrant ssh` to log in.
  * To load the data `cd` into  the newsdata file and use the command `psql -d news -f newsdata.sql`
+ * To load the views required to run the program run the command `psql -d news -f create_views.sql` 
 
 If you get an error message saying:
-  ```psql: FATAL: database "news" does not exist```
-  ```psql: could not connect to server: Connection refused```
+ - ```psql: FATAL: database "news" does not exist```
+ - ```psql: could not connect to server: Connection refused```
 This means the database server isn't running or isn't set up correctly, you may need to download the
 virual machine again into a fresh directory.
   
 ## Views required
 
-In order to answer these questions it is neccessary to build the following views in the database
-
-Run `psql news` in the command line
-
-Paste the following code to create the necessary views:
-
-  * ```
-    create view top_three as
-    select path, count(*) as num
-    from log where path like '%article%'
-    group by path
-    order by num desc
-    limit 3;
-    ```
-  * ```
-    create view author_titles as
-    select authors.name, articles.title, articles.slug
-    from articles join authors
-    on authors.id = articles.author
-    order by name;
-    ```
-  * ```
-    create view article_count as
-    select path, count(*) as num
-    from log where path like '%article%'
-    group by path;
-    ```
-  * ```
-    create view requests_made as
-    select date_trunc('day', time), count(*) as num_requests
-    from log
-    group by date_trunc('day', time);
-    ```
-  * ```
-    create view request_errors as
-    select date_trunc('day', time), status, count(*) as num_errors
-    from log where status != '200 OK'
-    group by date_trunc('day', time), status
-    order by date_trunc('day', time);
-    ```
-  * ```
-    create view error_comparisons as
-    select to_char(requests_made.date_trunc, 'FMMonth DD, YYYY'), 
-    round(cast(num_errors as numeric)/num_requests*100),2) as percentage
-    from request_errors join requests_made
-    on request_errors.date_trunc = requests_made.date_trunc;
-    ```
+The views required to run the program can be found in create_views.sql
     
 ## Run program
 
