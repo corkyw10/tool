@@ -84,7 +84,7 @@ CREATE VIEW error_comparisons AS
             round(cast(num_errors AS numeric)/num_requests*100,2) AS percentage
        FROM request_errors 
             JOIN requests_made
-ON request_errors.date_trunc = requests_made.date_trunc;
+            ON request_errors.date_trunc = requests_made.date_trunc;
 ```
 
 
