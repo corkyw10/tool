@@ -35,7 +35,7 @@ You can install VirtualBox via this [link](https://www.virtualbox.org/wiki/Downl
 If you get an error message saying:
  - ```psql: FATAL: database "news" does not exist```
  - ```psql: could not connect to server: Connection refused```
-This means the database server isn't running or isn't set up correctly, you may need to download the
+This means the database server isn't running or isn't set up correctly, you may need to [download](https://github.com/udacity/fullstack-nanodegree-vm) the
 virual machine again into a fresh directory.
   
 ## Views required
