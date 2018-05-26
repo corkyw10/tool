@@ -29,7 +29,7 @@ You can install VirtualBox via this [link](https://www.virtualbox.org/wiki/Downl
  * Save Vagrantfile in your vagrant folder.
  * Type `vagrant init ubuntu/trusty64` to tell Vagrant what kind of Linux VM you want to run
  * Run the virtual machine by running `vagrant up`and `vagrant ssh` to log in.
- * To load the data `cd` into  the newsdata file and use the command `psql -d news -f newsdata.sql`
+ * To load the data `cd` into  the project folder and use the command `psql -d news -f newsdata.sql`
  * To load the views required to run the program run the command `psql -d news -f create_views.sql` 
 
 If you get an error message saying:
