@@ -56,7 +56,7 @@ Paste the following code to create the necessary views:
     order by name;
     ```
   * ```
-    create view articles_count as
+    create view article_count as
     select path, count(*) as num
     from log where path like '%article%'
     group by path;
